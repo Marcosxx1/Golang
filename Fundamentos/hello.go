@@ -11,32 +11,15 @@ func main() {
 	// fmt.Println(variavel_iniciada)
 	// a saída será um campo vazio, pois não ha valor na variável
 	// o mesmo serve para qualquer variável
-	variavel_string := "Frase em string"
-	variavel_int := 10
-	variavel_double := 1.5
-	variavel_boolean := true
+	var nome = "marcos"
+	var peso = 10
+	fmt.Printf("Hello, %s e o peso é %d\n", nome, peso)
+	fmt.Printf("O tipo da variável nome é %T e o tipo da variável peso é %T\n", nome, peso)
 
-	fmt.Printf("%s é do tipo %T\n", variavel_string, variavel_string)
-	fmt.Printf("%d é do tipo %T\n", variavel_int, variavel_int)
-	fmt.Printf("%f é do tipo %T\n", variavel_double, variavel_double)
-	fmt.Printf("%t é do tipo %T\n\n", variavel_boolean, variavel_boolean)
+	// criação e atribuição
 
-	var nota int
-	nota = 10
+	texto := "Este é um texto"
+	numero := 10.1
 
-	var texto string
-	texto = "Sua nota é: "
-
-	// Criação e atribuição
-	// Quando criamos e atribuimos, Go entende que a variável será daquele tipo
-	mensagem := "texto criado e inicializado!"
-
-	fmt.Printf("%s %d", texto, nota)
-	fmt.Printf("\n%s\n ", mensagem)
-
-	// tipos de dados
-	TextoAlterado := "teste"
-	TextoAlterado = "novo valor da variável texto"
-
-	fmt.Println(TextoAlterado)
+	fmt.Printf("%s, e o valor é: %.2f", texto, numero)
 }
