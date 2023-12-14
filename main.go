@@ -15,15 +15,15 @@ func main() {
 
   pessoa := model.Pessoa{
     Nome:     "João",
-    Idade:    30,
+    Idade:    0,
 		DataNascimento: time.Date(2000, 11, 25, 0,0,0,0, time.Local),
     Endereco: arquivoJson,
   }
 
-	idade := pessoa.CalculaIdade()
 
   fmt.Println("pessoa: ", pessoa)
-  fmt.Println("idade: ", idade)
+	pessoa.CalculaIdade()
+  fmt.Println("idade: ", pessoa.Idade)
   arquivoJson.Apresentar()
 	
 

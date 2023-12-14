@@ -13,8 +13,8 @@ type Pessoa struct {
    Métodos devem estar dentro de structs */
 
 // Método publico
-func (p Pessoa) CalculaIdade() int { 
-	return time.Now().Year() - p.DataNascimento.Year()
+func (p *Pessoa) CalculaIdade() { 
+	p.Idade = time.Now().Year() - p.DataNascimento.Year()
 }
 
 //função publica 
