@@ -17,6 +17,14 @@ func main() {
     Idade:    30,
     Endereco: arquivoJson,
   }
-  fmt.Println(pessoa)
+
+	pessoa2 := model.Pessoa{
+			Nome:     "Maria",
+			Idade: 40,
+			Endereco: arquivoJson,
+		}
+
+  fmt.Println("pessoa: ", pessoa)
+	fmt.Println("pessoa2: ", pessoa2)
   arquivoJson.Apresentar()
 }
