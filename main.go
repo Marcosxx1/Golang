@@ -1,23 +1,22 @@
 package main
 
-import "fmt"
-
-type endereco struct {
-	rua    string
-	numero int
-	cidade string
-}
-
-func (e endereco) apresentar() {
-	fmt.Printf("Rua: %s, numero: %d, cidade: %s", e.rua, e.numero, e.cidade)
-}
-
+import (
+	"Golang/model"
+	"fmt"
+)
+ 
 func main() {
-	fmt.Println("Hello World")
-	instanciaEndereco := endereco{
-		rua:    "Rua Meu Endereço",
-		numero: 21,
-		cidade: "Cidade pequena",
-	}
-	instanciaEndereco.apresentar()
+  arquivoJson := model.Endereco{
+    Rua:    "Rua Meu Endereço",
+    Numero: 21,
+    Cidade: "Cidade pequena",
+  }
+ 
+  pessoa := model.Pessoa{
+    Nome:     "João",
+    Idade:    30,
+    Endereco: arquivoJson,
+  }
+  fmt.Println(pessoa)
+  arquivoJson.Apresentar()
 }
