@@ -3,6 +3,7 @@ package main
 import (
 	"Golang/model"
 	"fmt"
+	"time"
 )
  
 func main() {
@@ -11,20 +12,19 @@ func main() {
     Numero: 21,
     Cidade: "Cidade pequena",
   }
- 
+
   pessoa := model.Pessoa{
     Nome:     "João",
     Idade:    30,
+		DataNascimento: time.Date(2000, 11, 25, 0,0,0,0, time.Local),
     Endereco: arquivoJson,
   }
 
-	pessoa2 := model.Pessoa{
-			Nome:     "Maria",
-			Idade: 40,
-			Endereco: arquivoJson,
-		}
+	idade := pessoa.CalculaIdade()
 
   fmt.Println("pessoa: ", pessoa)
-	fmt.Println("pessoa2: ", pessoa2)
+  fmt.Println("idade: ", idade)
   arquivoJson.Apresentar()
+	
+
 }
