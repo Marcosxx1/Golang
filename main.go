@@ -1,30 +1,40 @@
 package main
 
-import (
-	"Golang/model"
-	"fmt"
-	"time"
-)
- 
+import "Golang/model"
+
 func main() {
-  arquivoJson := model.Endereco{
-    Rua:    "Rua Meu Endereço",
-    Numero: 21,
-    Cidade: "Cidade pequena",
+
+	imovelCasa := model.Casa {
+    Tamanho: "Grande",
+    Valor: 1000000,
+    NumeroDeQuartos: 2,
+    Endereco: model.Endereco{
+      Rua: "Rua dos Bobos",
+      Numero: 0,
+      Cidade: "Cidade do Bobo",
+    },
   }
 
-  pessoa := model.Pessoa{
-    Nome:     "João",
-    Idade:    0,
-		DataNascimento: time.Date(2000, 11, 25, 0,0,0,0, time.Local),
-    Endereco: arquivoJson,
+
   }
 
+	/*   arquivoJson := model.Endereco{
+	    Rua:    "Rua Meu Endereço",
+	    Numero: 21,
+	    Cidade: "Cidade pequena",
+	  }
 
-  fmt.Println("pessoa: ", pessoa)
-	pessoa.CalculaIdade()
-  fmt.Println("idade: ", pessoa.Idade)
-  arquivoJson.Apresentar()
-	
+	  pessoa := model.Pessoa{
+	    Nome:     "João",
+	    Idade:    0,
+			DataNascimento: time.Date(2000, 11, 25, 0,0,0,0, time.Local),
+	    Endereco: arquivoJson,
+	  }
+
+
+	  fmt.Println("pessoa: ", pessoa)
+		pessoa.CalculaIdade()
+	  fmt.Println("idade: ", pessoa.Idade)
+	  arquivoJson.Apresentar() */
 
 }
