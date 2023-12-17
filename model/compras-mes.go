@@ -55,7 +55,7 @@ func IniciaCompraMes() *ComprasMes {
 	comprasDoMes := &ComprasMes{
 		DataCompra:       time.Date(2023, 11, 23, 0, 0, 0, 0, time.Local),
 		Mercado:          localDeCompra,                       //Aponta para uma instancia existente de Mercado
-		ItemsParaComprar: []*ItemsCompra{itemsCompraDaCompra}, // Aoibta oara uma instancia existente de ItemsCompra
+		ItemsParaComprar: []*ItemsCompra{itemsCompraDaCompra}, // Aponta oara uma instancia existente de ItemsCompra
 	}
 
 	return comprasDoMes

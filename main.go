@@ -2,58 +2,37 @@ package main
 
 import (
 	"Golang/model"
+	"Golang/repositorio"
 	"fmt"
 )
 
 func main() {
+	/* 	//Interfaces
 
-	//Exercicio items compra
-	fmt.Println(model.IniciaCompraMes())
+	   	circulo := model.IniciaRetangulo()
+	   	retangulo := model.IniciaCirculo()
 
-	/* 	endereco := model.Endereco{
-	   		Rua:    "Rua dos Bobos",
-	   		Numero: 0,
-	   		Cidade: "Cidade do Bobo",
-	   	}
-	   	imovelCasa := model.Imovel{
-	   		Tamanho:         "Grande",
-	   		Valor:           1000000,
-	   		NumeroDeQuartos: 2,
-	   		EnderecoImovel:  endereco,
-	   	}
+	   	ExibeGeometria(circulo)
+	   	ExibeGeometria(retangulo) */
 
-	   	casa := model.Casa{
-	   		Imovel: imovelCasa,
-	   		Jardim: true,
-	   	}
+	enderecos := model.InicializaEnderecos()
 
-	   	apartamento := model.Apartamento{
-	   		Imovel:         imovelCasa,
-	   		Andar:          10,
-	   		NumeroDeBlocos: 3,
-	   		Elevador:       true,
-	   	}
+	enderecosNoRepositorio := repositorio.EnderecoRepositorio{
+		Enderecos: enderecos,
+	}
 
-	   	fmt.Println(imovelCasa)
-	   	fmt.Println(casa)
-	   	fmt.Println(apartamento) */
+	id := 3
+	enderecoEncontrado := enderecosNoRepositorio.FindByID(id)
+	fmt.Println(enderecoEncontrado, ": enderecoEncontrado")
 
-	/*   arquivoJson := model.Endereco{
-	    Rua:    "Rua Meu Endereço",
-	    Numero: 21,
-	    Cidade: "Cidade pequena",
-	  }
+	nomeRua := "Travessa das Flores"
+	cidadeEncontrada := enderecosNoRepositorio.FindByRua(nomeRua)
+	fmt.Println(cidadeEncontrada, ": enderecoEncontrado 2 ")
 
-	  pessoa := model.Pessoa{
-	    Nome:     "João",
-	    Idade:    0,
-			DataNascimento: time.Date(2000, 11, 25, 0,0,0,0, time.Local),
-	    Endereco: arquivoJson,
-	  }
-
-
-	  fmt.Println("pessoa: ", pessoa)
-		pessoa.CalculaIdade()
-	  fmt.Println("idade: ", pessoa.Idade)
-	  arquivoJson.Apresentar() */
 }
+
+/*
+func ExibeGeometria(g interfaces.Geometria) {
+	fmt.Println(g.Area())
+}
+*/
