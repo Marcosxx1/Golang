@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func main2() {
+func Structs() {
 
 	//Exercicio items compra
 	fmt.Println(model.IniciaCompraMes())

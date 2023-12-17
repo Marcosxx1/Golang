@@ -1,38 +1,10 @@
 package main
 
-import (
-	"Golang/model"
-	"Golang/repositorio"
-	"fmt"
-)
+import "Golang/mains"
 
 func main() {
-	/* 	//Interfaces
 
-	   	circulo := model.IniciaRetangulo()
-	   	retangulo := model.IniciaCirculo()
-
-	   	ExibeGeometria(circulo)
-	   	ExibeGeometria(retangulo) */
-
-	enderecos := model.InicializaEnderecos()
-
-	enderecosNoRepositorio := repositorio.EnderecoRepositorio{
-		Enderecos: enderecos,
-	}
-
-	id := 3
-	enderecoEncontrado := enderecosNoRepositorio.FindByID(id)
-	fmt.Println(enderecoEncontrado, ": enderecoEncontrado")
-
-	nomeRua := "Travessa das Flores"
-	cidadeEncontrada := enderecosNoRepositorio.FindByRua(nomeRua)
-	fmt.Println(cidadeEncontrada, ": enderecoEncontrado 2 ")
-
+	mains.Structs()
+	mains.Interfaces()
+	mains.Generics()
 }
-
-/*
-func ExibeGeometria(g interfaces.Geometria) {
-	fmt.Println(g.Area())
-}
-*/
