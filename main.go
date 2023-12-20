@@ -1,31 +1,21 @@
 package main
 
-import (
-	"fmt"
-	"os"
-)
-
-func MostraTexto() {
-	fmt.Println("Finalizando")
-}
+import "fmt"
 
 func main() {
 
-	// Cria o arquivo
-	file, err := os.Create("./setting.go")
+	channel := make(chan int)
 
-	// Verifica por erros
-	if err != nil {
-		panic(err)
+	go setNumbers(channel)
+
+	for v := range channel {
+		fmt.Println(v)
 	}
-
-	_, err = file.Write([]byte("teste"))
-	if err != nil {
-		panic(err)
-	}
-
-	// Finaliza a E/S de arquivos
-	defer file.Close() // defer =
-	// Depois mostra o texto
-	defer MostraTexto()
 }
+
+	func setNumbers(channel chan int){
+		for i:= 0; i< 10; i++ {
+			channel <- i
+		}
+		close(channel)
+	}
