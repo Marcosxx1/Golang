@@ -1,6 +1,6 @@
 package interfaces
 
-import "Golang/model"
+import "Golang/inicio/basico-2/model"
 
 type Buscavel interface {
 	FindByID(id int) []model.Endereco

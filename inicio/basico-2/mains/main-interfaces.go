@@ -1,8 +1,8 @@
 package mains
 
 import (
-	"Golang/model"
-	"Golang/repositorio"
+	"Golang/inicio/basico-2/model"
+	"Golang/inicio/basico-2/repositorio"
 	"fmt"
 )
 

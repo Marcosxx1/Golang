@@ -2,7 +2,7 @@ package mains
 
 //Retirar o arquivo que exite principal e renomear para main
 import (
-	"Golang/model"
+	"Golang/inicio/basico-2/model"
 	"fmt"
 )
 

@@ -1,6 +1,6 @@
 package repositorio
 
-import "Golang/model"
+import "Golang/inicio/basico-2/model"
 
 type EnderecoRepositorio struct {
 	Enderecos []*model.Endereco
