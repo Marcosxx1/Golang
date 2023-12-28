@@ -3,52 +3,66 @@ package campaign
 import (
 	"fmt"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
 
-func TestNewCampaign(t *testing.T) {
+func InitializeNewCampaign() (string, string, []string, *Campaign) {
+	expectedName := "Nome Campanha"
+	expectedContent := "Body"
+	expectedContacts := []string{"test1@example.com", "test2@example.com"}
 
-  assert := assert.New(t)
-
-  expectedName := "Nome Campanha"
-  expectedContent := "Body"
-  expectedContacts := []string{"test1@example.com", "test2@example.com"}
-
-  campaign := NewCampaign(expectedName, expectedContent, expectedContacts)
-
-  assert.Equal(campaign.ID, "1")
-  assert.Equal(expectedName, campaign.Name)
-  assert.Equal(expectedContent, campaign.Content)
-
-  for _, actual := range campaign.Contacts {
-    for _, expected := range expectedContacts {
-      if actual.Email == expected {
-        fmt.Println(actual.Email)
-        fmt.Println(expected)
-        } 
-    }
-  }
-  
+	// act
+	campaign := NewCampaign(expectedName, expectedContent, expectedContacts)
+	return expectedName, expectedContent, expectedContacts, campaign
 }
 
+func Test_New_Campaign_Creation(t *testing.T) {
 
+	// arrange
+	assert := assert.New(t)
+	expectedName, expectedContent, expectedContacts, campaign := InitializeNewCampaign()
 
+	// assert
+	assert.Equal(expectedName, campaign.Name)
+	assert.Equal(expectedContent, campaign.Content)
+	assert.Equal(len(expectedContacts), len(campaign.Contacts))
 
-/* package campaign
-
-import "testing"
-
-
-func TestNewCampaign(t *testing.T){
-	expectedName := "New Campaign"
-	expectedContent := "Content"
-	expectedContacts := []string{"first@email.com", "second@email.com"}
-
-
-	campapaign := NewCampaign(expectedName, expectedContent, expectedContacts)
-
-	if campapaign.Name != expectedName{
-		t.Errorf("got %s, wanted %s", campapaign.Name, expectedName)
+	fmt.Println(len(expectedContacts), len(campaign.Contacts))
+	for _, actual := range campaign.Contacts {
+		for _, expected := range expectedContacts {
+			if actual.Email == expected {
+				fmt.Println(actual.Email)
+				fmt.Println(expected)
+			}
+		}
 	}
-} */
+
+}
+
+func Test_New_Campaign_Id_Not_Nil(t *testing.T) {
+
+	// arrange
+
+	campaign := InitializeNewCampaign()
+
+	// assert
+	assert.NotNil(campaign.ID)
+}
+
+func Test_New_Campaign_CreatedAt_Must_Be_Now(t *testing.T) {
+
+	// arrange
+	assert := assert.New(t)
+	expectedName := "Nome Campanha"
+	expectedContent := "Body"
+	expectedContacts := []string{"test1@example.com", "test2@example.com"}
+	now := time.Now().Add(-time.Minute)
+
+	// act
+	assertCampaign := NewCampaign(expectedName, expectedContent, expectedContacts)
+
+	// assert
+	assert.Greater(assertCampaign.CreatedAt, now)
+}
