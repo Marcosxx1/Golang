@@ -44,8 +44,8 @@ func Test_New_Campaign_Creation(t *testing.T) {
 func Test_New_Campaign_Id_Not_Nil(t *testing.T) {
 
 	// arrange
-
-	campaign := InitializeNewCampaign()
+	assert := assert.New(t)
+	_, _, _, campaign := InitializeNewCampaign()
 
 	// assert
 	assert.NotNil(campaign.ID)
@@ -55,14 +55,11 @@ func Test_New_Campaign_CreatedAt_Must_Be_Now(t *testing.T) {
 
 	// arrange
 	assert := assert.New(t)
-	expectedName := "Nome Campanha"
-	expectedContent := "Body"
-	expectedContacts := []string{"test1@example.com", "test2@example.com"}
 	now := time.Now().Add(-time.Minute)
 
 	// act
-	assertCampaign := NewCampaign(expectedName, expectedContent, expectedContacts)
+	_, _, _, campaign := InitializeNewCampaign()
 
 	// assert
-	assert.Greater(assertCampaign.CreatedAt, now)
+	assert.Greater(campaign.CreatedAt, now)
 }
