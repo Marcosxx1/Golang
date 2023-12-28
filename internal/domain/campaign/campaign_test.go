@@ -34,7 +34,6 @@ func Test_New_Campaign_Creation(t *testing.T) {
 			}
 		}
 	}
-
 }
 
 func Test_New_Campaign_Id_Not_Nil(t *testing.T) {
@@ -75,8 +74,6 @@ func Test_NewCampaign_MustValidateContent(t *testing.T){
 
 	assert.Equal("Content must be filled", err.Error())
 }
-
- 
 
 func TestNewCampaignMustValidateContacts(t *testing.T){
 	assert := assert.New(t)
