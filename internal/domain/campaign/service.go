@@ -1,13 +1,16 @@
 package campaign
 
-import "Golang/internal/contract"
+import (
+	"Golang/internal/contract"
+)
 
 type Service struct {
 	Repository Repository
 }
 
-func (s *Service) Create(NewCampaign contract.NewCampaign) error {
+func (s *Service) Create(newCampaign contract.NewCampaign) (string, error) {
 
-	return nil
+	campaign, _ := NewCampaign(newCampaign.Name, newCampaign.Content, newCampaign.Emails)
+
+	return campaign.ID, nil
 }
-

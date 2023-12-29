@@ -23,15 +23,15 @@ type Campaign struct {
 
 func NewCampaign(name string, content string, emails []string) (*Campaign, error) {
 	if name == "" {
-		return nil, errors.New("Name must be filled")
+		return nil, errors.New("name must be filled")
 	}
 	if content == "" {
-		return nil, errors.New("Content must be filled")
+		return nil, errors.New("content must be filled")
 	}
 
 	for _, email := range emails {
 		if !isValidEmail(email) {
-			return nil, errors.New("Invalid email: " + email)
+			return nil, errors.New("invalid email: " + email)
 		}
 	}
 
