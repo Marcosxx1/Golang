@@ -59,23 +59,23 @@ func Test_New_Campaign_CreatedAt_Must_Be_Now(t *testing.T) {
 	assert.Greater(campaign.CreatedAt, now)
 }
 
-func Test_NewCampaign_MustValidateName(t *testing.T){
+func Test_NewCampaign_MustValidateName(t *testing.T) {
 	assert := assert.New(t)
 
 	_, err := NewCampaign("", expectedContent, expectedContacts)
 
-	assert.Equal("Name must be filled", err.Error())
+	assert.Equal("name must be filled", err.Error())
 }
 
-func Test_NewCampaign_MustValidateContent(t *testing.T){
+func Test_NewCampaign_MustValidateContent(t *testing.T) {
 	assert := assert.New(t)
 
 	_, err := NewCampaign(expectedName, "", expectedContacts)
 
-	assert.Equal("Content must be filled", err.Error())
+	assert.Equal("content must be filled", err.Error())
 }
 
-func TestNewCampaignMustValidateContacts(t *testing.T){
+func TestNewCampaignMustValidateContacts(t *testing.T) {
 	assert := assert.New(t)
 
 	expectedName := "Test Campaign"
@@ -84,14 +84,13 @@ func TestNewCampaignMustValidateContacts(t *testing.T){
 	emptyEmail := []string{"", "test2@example.com"}
 	_, errEmpty := NewCampaign(expectedName, expectedContent, emptyEmail)
 	assert.Error(errEmpty)
-	assert.Contains(errEmpty.Error(), "Invalid email: ")
+	assert.Contains(errEmpty.Error(), "invalid email: ")
 
 	onlyNumbersEmail := []string{"23d23d", "test2@example.com"}
 	_, errNumbersEmail := NewCampaign(expectedName, expectedContent, onlyNumbersEmail)
 	assert.Error(errNumbersEmail)
-	assert.Contains(errNumbersEmail.Error(), "Invalid email: ")
+	assert.Contains(errNumbersEmail.Error(), "invalid email: ")
 
-		
 	validEmail := []string{"valid@email.com", "test2@example.com"}
 	_, validEmailCreated := NewCampaign(expectedName, expectedContent, validEmail)
 	assert.NoError(validEmailCreated)
