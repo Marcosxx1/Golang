@@ -1,39 +1,24 @@
 package campaign
 
 import (
-	"errors"
-	"regexp"
-	"strconv"
 	"time"
 
 	"github.com/rs/xid"
 )
 
 type Contact struct {
-	Email string
+	Email string `validate:"required,email"`
 }
 
 type Campaign struct {
-	ID        string
-	Name      string
-	CreatedAt time.Time
-	Content   string
-	Contacts  []Contact
+	ID        string    `validate:"required"`
+	Name      string    `validate:"min=5,max=25"`
+	CreatedAt time.Time `validate:"required"`
+	Content   string    `validate:"min=5,max=1024"`
+	Contacts  []Contact `validate:"min=1,max=25"`
 }
 
 func NewCampaign(name string, content string, emails []string) (*Campaign, error) {
-	if name == "" {
-		return nil, errors.New("name must be filled")
-	}
-	if content == "" {
-		return nil, errors.New("content must be filled")
-	}
-
-	for _, email := range emails {
-		if !isValidEmail(email) {
-			return nil, errors.New("invalid email: " + email)
-		}
-	}
 
 	contacts := make([]Contact, len(emails))
 
@@ -48,19 +33,4 @@ func NewCampaign(name string, content string, emails []string) (*Campaign, error
 		CreatedAt: time.Now(),
 		Contacts:  contacts,
 	}, nil
-}
-
-func isValidEmail(email string) bool {
-	if email == "" {
-		return false
-	}
-
-	_, err := strconv.Atoi(email)
-	if err == nil {
-		return false
-	}
-
-	emailRegex := `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`
-	match, _ := regexp.MatchString(emailRegex, email)
-	return match
 }
