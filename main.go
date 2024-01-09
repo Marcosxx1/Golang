@@ -2,25 +2,31 @@ package main
 
 import (
 	"Golang/internal/domain/campaign"
+	"Golang/internal/domain/error_handling"
 
-	"github.com/go-playground/validator/v10"
+	"fmt"
 )
 
 func main() {
 
-	contacts := []campaign.Contact{{Email: ""}}
-	campaign := campaign.Campaign{
-		Name:     "Campanha Teste",
-		Contacts: contacts,
+	campaignInstance, err := campaign.NewCampaign(
+		"asd32s",
+		"asdasdasd",
+		[]string{"email@example.com"})
+
+	if err != nil {
+		error_handling.ValidateStruct(err)
+		return 
 	}
-	validate := validator.New()
-	err := validate.Struct(campaign)
-	if err == nil {
-		println("nenhum erro")
-	} else {
-		validationsErrors := err.(validator.ValidationErrors)
-		for _, v := range validationsErrors {
-			println(v.StructField() + " is invalid:  " + v.Tag())
-		}
+
+	fmt.Println("ID:", campaignInstance.ID)
+	fmt.Println("Name:", campaignInstance.Name)
+	fmt.Println("CreatedAt:", campaignInstance.CreatedAt)
+	fmt.Println("Content:", campaignInstance.Content)
+
+	for i, contact := range campaignInstance.Contacts {
+		fmt.Printf("Contact %d:\n", i)
+		fmt.Println("  Email:", contact.Email)
 	}
+
 }

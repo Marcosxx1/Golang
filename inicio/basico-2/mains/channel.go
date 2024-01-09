@@ -20,9 +20,11 @@ func Channels() {
 	}
 }
 
+
 func setNumbers(channel chan int) {
 	for i := 0; i < 10; i++ {
 		channel <- i
 	}
 	close(channel)
+	
 }

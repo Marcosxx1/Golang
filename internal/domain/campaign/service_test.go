@@ -52,7 +52,7 @@ func Test_Create_ValidateDomainError(t *testing.T) {
 	_, err := service.Create(newCampaign)
 
 	assert.NotNil(err)
-	assert.Equal("name must be filled", err.Error())
+	assert.Equal("name is required with min 5", err.Error())
 }
 
 func Test_Create_SaveCampaign(t *testing.T) {

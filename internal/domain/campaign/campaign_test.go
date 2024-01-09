@@ -1,97 +1,121 @@
-package campaign
+package campaign_test
 
 import (
-	"fmt"
 	"testing"
-	"time"
+
+	"Golang/internal/domain/campaign"
 
 	"github.com/stretchr/testify/assert"
 )
 
-var (
-	expectedName     = "Nome Campanha"
-	expectedContent  = "Body"
-	expectedContacts = []string{"test1@example.com", "test2@example.com"}
-)
+func TestNewCampaignMinimumNameLength(t *testing.T) {
+	name := "Min"
+	content := "This is a valid campaign."
+	emails := []string{"email@example.com"}
 
-func Test_New_Campaign_Creation(t *testing.T) {
+	newCampaign, err := campaign.NewCampaign(name, content, emails)
 
-	// arrange
-	assert := assert.New(t)
-	campaign, _ := NewCampaign(expectedName, expectedContent, expectedContacts)
-
-	// assert
-	assert.Equal(expectedName, campaign.Name)
-	assert.Equal(expectedContent, campaign.Content)
-	assert.Equal(len(expectedContacts), len(campaign.Contacts))
-
-	fmt.Println(len(expectedContacts), len(campaign.Contacts))
-	for _, actual := range campaign.Contacts {
-		for _, expected := range expectedContacts {
-			if actual.Email == expected {
-				fmt.Println(actual.Email)
-				fmt.Println(expected)
-			}
-		}
-	}
+	assert.Error(t, err)
+	assert.Nil(t, newCampaign)
 }
 
-func Test_New_Campaign_Id_Not_Nil(t *testing.T) {
+func TestNewCampaignMaximumNameLength(t *testing.T) {
+	name := "VeryLongName123456789000245"
+	content := "This is a valid campaign."
+	emails := []string{"email@example.com"}
 
-	// arrange
-	assert := assert.New(t)
-	campaign, _ := NewCampaign(expectedName, expectedContent, expectedContacts)
+	newCampaign, err := campaign.NewCampaign(name, content, emails)
 
-	// assert
-	assert.NotNil(campaign.ID)
+	assert.Error(t, err)
+	assert.Nil(t, newCampaign)
 }
 
-func Test_New_Campaign_CreatedAt_Must_Be_Now(t *testing.T) {
+func TestNewCampaignMinimumMaximumContentLength(t *testing.T) {
+	name := "Valid Campaign"
+	minContent := "Min"
+	maxContent := "VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent12345678900VeryLongContent1234567890VeryLongContent12345678900VeryLongContent1234567890VeryLongContent12345678"
+	emails := []string{"email@example.com"}
 
-	// arrange
-	assert := assert.New(t)
-	now := time.Now().Add(-time.Minute)
+	// Test for minimum content length
+	newCampaign, err := campaign.NewCampaign(name, minContent, emails)
+	assert.Error(t, err)
+	assert.Nil(t, newCampaign)
 
-	// act
-	campaign, _ := NewCampaign(expectedName, expectedContent, expectedContacts)
-
-	// assert
-	assert.Greater(campaign.CreatedAt, now)
+	// Test for maximum content length
+	newCampaign, err = campaign.NewCampaign(name, maxContent, emails)
+	assert.Error(t, err)
+	assert.Nil(t, newCampaign)
 }
 
-func Test_NewCampaign_MustValidateName(t *testing.T) {
-	assert := assert.New(t)
+func TestNewCampaignMinimumMaximumEmails(t *testing.T) {
+	name := "Valid Campaign"
+	content := "This is a valid campaign."
+	minEmails := []string{"email@example.com"}
+	maxEmails := make([]string, 26) // 26 emails to exceed the maximum allowed
 
-	_, err := NewCampaign("", expectedContent, expectedContacts)
+	// Test for minimum number of emails
+	newCampaign, err := campaign.NewCampaign(name, content, minEmails)
+	assert.NoError(t, err)
+	assert.NotNil(t, newCampaign)
 
-	assert.Equal("name must be filled", err.Error())
+	// Test for maximum number of emails
+	newCampaign, err = campaign.NewCampaign(name, content, maxEmails)
+	assert.Error(t, err)
+	assert.Nil(t, newCampaign)
 }
 
-func Test_NewCampaign_MustValidateContent(t *testing.T) {
-	assert := assert.New(t)
 
-	_, err := NewCampaign(expectedName, "", expectedContacts)
+func TestNewCampaignValid(t *testing.T) {
+	name := "Valid Campaign"
+	content := "This is a valid campaign."
+	emails := []string{"email@example.com"}
 
-	assert.Equal("content must be filled", err.Error())
+	newCampaign, err := campaign.NewCampaign(name, content, emails)
+
+	assert.NoError(t, err)
+	assert.NotNil(t, newCampaign)
 }
 
-func TestNewCampaignMustValidateContacts(t *testing.T) {
-	assert := assert.New(t)
+func TestNewCampaignInvalidName(t *testing.T) {
+	name := "Shrt"
+	content := "This is a valid campaign."
+	emails := []string{"email@example.com"}
 
-	expectedName := "Test Campaign"
-	expectedContent := "Test Content"
+	newCampaign, err := campaign.NewCampaign(name, content, emails)
 
-	emptyEmail := []string{"", "test2@example.com"}
-	_, errEmpty := NewCampaign(expectedName, expectedContent, emptyEmail)
-	assert.Error(errEmpty)
-	assert.Contains(errEmpty.Error(), "invalid email: ")
+	assert.Error(t, err)
+	assert.Nil(t, newCampaign)
+}
 
-	onlyNumbersEmail := []string{"23d23d", "test2@example.com"}
-	_, errNumbersEmail := NewCampaign(expectedName, expectedContent, onlyNumbersEmail)
-	assert.Error(errNumbersEmail)
-	assert.Contains(errNumbersEmail.Error(), "invalid email: ")
+func TestNewCampaignInvalidContent(t *testing.T) {
+	name := "Valid Campaign"
+	content := "Shrt"
+	emails := []string{"email@example.com"}
 
-	validEmail := []string{"valid@email.com", "test2@example.com"}
-	_, validEmailCreated := NewCampaign(expectedName, expectedContent, validEmail)
-	assert.NoError(validEmailCreated)
+	newCampaign, err := campaign.NewCampaign(name, content, emails)
+
+	assert.Error(t, err)
+	assert.Nil(t, newCampaign)
+}
+
+func TestNewCampaignInvalidEmail(t *testing.T) {
+	name := "Valid Campaign"
+	content := "This is a valid campaign."
+	emails := []string{"invalid-email"}
+
+	newCampaign, err := campaign.NewCampaign(name, content, emails)
+
+	assert.Error(t, err)
+	assert.Nil(t, newCampaign)
+} 
+
+func TestNewCampaignEmptyEmails(t *testing.T) {
+	name := "Valid Campaign"
+	content := "This is a valid campaign."
+	emails := []string{}
+
+	newCampaign, err := campaign.NewCampaign(name, content, emails)
+
+	assert.Error(t, err)
+	assert.Nil(t, newCampaign)
 }

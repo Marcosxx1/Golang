@@ -1,6 +1,8 @@
 package campaign
 
 import (
+	"Golang/internal/domain/error_handling"
+	"fmt"
 	"time"
 
 	"github.com/rs/xid"
@@ -19,18 +21,25 @@ type Campaign struct {
 }
 
 func NewCampaign(name string, content string, emails []string) (*Campaign, error) {
-
 	contacts := make([]Contact, len(emails))
 
 	for indice, valor := range emails {
-		contacts[indice].Email = valor
+		contacts[indice] = Contact{Email: valor}
 	}
 
-	return &Campaign{
+	campaign := &Campaign{
 		ID:        xid.New().String(),
 		Name:      name,
 		Content:   content,
 		CreatedAt: time.Now(),
 		Contacts:  contacts,
-	}, nil
+	}
+
+	err := error_handling.ValidateStruct(campaign)
+	if err == nil {
+		return campaign, nil
+	}
+	fmt.Println("Validation Error:", err) // Add this line for debugging
+
+	return nil, err
 }
