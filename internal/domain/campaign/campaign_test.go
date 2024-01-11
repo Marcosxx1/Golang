@@ -5,6 +5,7 @@ import (
 
 	"Golang/internal/domain/campaign"
 
+	"github.com/jaswdr/faker"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -31,9 +32,10 @@ func TestNewCampaignMaximumNameLength(t *testing.T) {
 }
 
 func TestNewCampaignMinimumMaximumContentLength(t *testing.T) {
+	fake := faker.New()
 	name := "Valid Campaign"
 	minContent := "Min"
-	maxContent := "VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent1234567890VeryLongContent12345678900VeryLongContent1234567890VeryLongContent12345678900VeryLongContent1234567890VeryLongContent12345678"
+	maxContent := fake.Lorem().Text(1100)
 	emails := []string{"email@example.com"}
 
 	// Test for minimum content length
@@ -64,7 +66,6 @@ func TestNewCampaignMinimumMaximumEmails(t *testing.T) {
 	assert.Nil(t, newCampaign)
 }
 
-
 func TestNewCampaignValid(t *testing.T) {
 	name := "Valid Campaign"
 	content := "This is a valid campaign."
@@ -84,6 +85,7 @@ func TestNewCampaignInvalidName(t *testing.T) {
 	newCampaign, err := campaign.NewCampaign(name, content, emails)
 
 	assert.Error(t, err)
+	assert.Equal(t,"name is required with min 5",  err.Error())
 	assert.Nil(t, newCampaign)
 }
 
@@ -95,6 +97,7 @@ func TestNewCampaignInvalidContent(t *testing.T) {
 	newCampaign, err := campaign.NewCampaign(name, content, emails)
 
 	assert.Error(t, err)
+	assert.Equal(t,"content is required with min 5",  err.Error())
 	assert.Nil(t, newCampaign)
 }
 
