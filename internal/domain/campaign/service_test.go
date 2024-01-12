@@ -1,7 +1,6 @@
 package campaign
 
 import (
-	internalErrors "Golang/internal"
 	"Golang/internal/contract"
 	"errors"
 	"testing"
