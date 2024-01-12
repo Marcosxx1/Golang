@@ -2,6 +2,7 @@ package campaign
 
 import (
 	"Golang/internal/contract"
+	internalerrors "Golang/internal/internal-errors"
 	"errors"
 	"testing"
 
@@ -16,6 +17,33 @@ type repositoryMock struct {
 func (r *repositoryMock) Save(campaign *Campaign) error {
 	args := r.Called(campaign)
 	return args.Error(0)
+}
+	
+func (r *repositoryMock) List() ([]*Campaign, error) {
+	args := r.Called()
+	return args.Get(0).([]*Campaign), args.Error(1)
+}
+
+func Test_ListCampaigns(t *testing.T){
+	assert := assert.New(t)
+
+	expectedCampaigns := []*Campaign{
+		{Name: "Campaign1", Content: "Content1", Contacts: []Contact{{Email: "contact1@test.com"}}},
+		{Name: "Campaign2", Content: "Content2", Contacts: []Contact{{Email: "contact2@test.com"}}},
+	}
+
+	repositoryMock := new(repositoryMock)
+	repositoryMock.On("List").Return(expectedCampaigns, nil)
+
+	service := Service{Repository: repositoryMock}
+
+	campaigns, err := service.listAll()
+
+	assert.Nil(err)
+
+	assert.Equal(expectedCampaigns, campaigns)
+
+	repositoryMock.AssertExpectations(t)
 }
 
 func Test_Create_Campaign(t *testing.T) {
@@ -78,7 +106,8 @@ func Test_Create_ValidateRepositorySave(t *testing.T) {
 	assert := assert.New(t)
 
 	repositoryMock := new(repositoryMock)
-	repositoryMock.On("Save", mock.Anything).Return(internalErrors.ProcessErrorToReturn(errors.New("error to save on database")))
+
+	repositoryMock.On("Save", mock.Anything).Return(internalerrors.ProcessErrorToReturn(errors.New("error to save on database")))
 
 	service := Service{Repository: repositoryMock}
 
@@ -87,6 +116,7 @@ func Test_Create_ValidateRepositorySave(t *testing.T) {
 		Content:  "Body Hi!",
 		Contacts: []string{"teste1@test.com"},
 	})
+	
 
-	assert.True(errors.Is(internalErrors.ErrInternal, err))
+	assert.True(errors.Is(internalerrors.ErrInternal, err))
 }

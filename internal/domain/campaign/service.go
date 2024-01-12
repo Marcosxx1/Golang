@@ -23,3 +23,7 @@ func (service *Service) Create(newCampaign contract.NewCampaign) (string, error)
 
 	return campaign.ID, nil
 }
+
+func (service *Service) listAll() ([]*Campaign, error) {
+	return service.Repository.List()
+}
