@@ -27,6 +27,7 @@ func main() {
 
 	router.Post("/campaigns", handler.CampaignPost)
 	router.Get("/", handler.CampaingGet)
+	router.Patch("/campaigns/{campaignId}", handler.CampaignUpdate)
 
 	http.ListenAndServe(":3000", router)
 }
