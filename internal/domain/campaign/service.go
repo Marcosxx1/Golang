@@ -58,7 +58,7 @@ func (service *Service) ListAll() ([]*Campaign, error) {
 	return service.Repository.List()
 }
 
-func (service *Service) Update (id string, campaignToUpdate contract.UpdateCampaign)(*Campaign, error) {
+func (service *Service) Update(id string, campaignToUpdate contract.UpdateCampaign)(*Campaign, error) {
 	existingCampaign, err := service.Repository.FindById(id)
 
 	if err != nil {
@@ -73,6 +73,7 @@ func (service *Service) Update (id string, campaignToUpdate contract.UpdateCampa
 		contacts[indice] = Contact{Email: valor}
 	}
 
+	
 	existingCampaign.Name = campaignToUpdate.Name
 	existingCampaign.Content = campaignToUpdate.Content
 	existingCampaign.Contacts = contacts
